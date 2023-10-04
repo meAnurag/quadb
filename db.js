@@ -5,6 +5,12 @@ dotenv.config();
 
 const sq = new Sequelize(process.env.DB_URL, {
   define: { timestamps: false },
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
 });
 
 export default sq;
