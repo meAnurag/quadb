@@ -19,7 +19,7 @@ app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "dev"));
 await testDB();
 
 app.get("/", (req, res) => {
-  res.send("Hello, World.");
+  res.send({ message: "Server running." });
 });
 
 app.use(userRouter);

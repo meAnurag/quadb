@@ -30,6 +30,9 @@ const User = sq.define(
     user_image: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isUrl: { msg: "Not a valid URL." },
+      },
     },
     total_orders: {
       type: DataTypes.INTEGER,

@@ -37,7 +37,7 @@ export const updateUser = async (req, res) => {
 export const getImage = async (req, res) => {
   try {
     const user = await User.findByPk(req.params.user_id, {
-      attributes: { include: ["user_password"] },
+      attributes: { exclude: ["user_email", "created_at", "user_password"] },
     });
 
     if (user === null) res.status(404).send({ message: "User not found" });
@@ -98,6 +98,11 @@ export const login = async (req, res) => {
 
     if (!passMatch)
       return res.status(401).send({ message: "Incorrect email or password!" });
+
+    await User.update(
+      { last_logged_in: new Date() },
+      { where: { user_email: data.user_email } }
+    );
 
     const token = jwt.sign(
       {
